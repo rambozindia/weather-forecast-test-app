@@ -5,7 +5,7 @@ export class ErrorModel {
   public correlationId?: string;
 
   constructor(
-    public errorI18NMessage: string, // The message code of the entry in the i18n file
+    public errorMessage: string, // The message code of the entry in the i18n file
     public httpCode: number = 500, // The HTTP code to send back to the frontend. Defaults to 500
   ) {}
 }
