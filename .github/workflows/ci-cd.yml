@@ -8,8 +8,8 @@ on:
       - main  # Change this to the branch you want to trigger the workflow
 
 jobs:
-   build:
-    runs-on: self-hosted
+  build-and-deploy:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -32,7 +32,7 @@ jobs:
           node-version: 16
 
       - name: Install backend dependencies
-        run: npm install --prefix backend
+        run: cd backend && npm install
 
       - name: Deploy
         run: pm2 restart weather-app
@@ -53,7 +53,7 @@ jobs:
       #     username: ${{ secrets.SERVER_USERNAME }}
       #     key: ${{ secrets.SERVER_SSH_KEY }}
       #     script: |
-      #       cd /www/wwwroot/ramkumarr.in/weather
+      #       cd /www/wwwroot/weather
       #       git pull origin main
       #       npm install --prefix frontend
       #       npm run build --prefix frontend
