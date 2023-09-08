@@ -16,5 +16,12 @@ export default class SearchCity extends Vue {
     this.$emit("placeChanged",this.selectedPlace);
   }
 
+  handleMapClick(event: any) {
+
+    const lat = event.latLng.lat();
+    const lng = event.latLng.lng();
+    this.selectedPlace = { lat, lng };
+    this.$emit("placeChanged",this.selectedPlace);
+  }
 
 }
