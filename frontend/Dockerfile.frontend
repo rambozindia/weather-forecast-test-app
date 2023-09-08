@@ -1,0 +1,19 @@
+# Build the Vue.js frontend
+FROM node:16 AS frontend-build
+WORKDIR /app/frontend
+
+# Copy the frontend source code
+COPY frontend/ ./
+
+# Install dependencies and build the Vue.js app
+RUN npm install
+RUN npm run build
+
+# Stage 2: Create the final production image for the frontend
+FROM nginx:latest
+
+# Copy the built frontend from the first stage to the Nginx web server directory
+COPY --from=frontend-build /app/frontend/dist /usr/share/nginx/html
+
+# Expose the default Nginx port (80)
+EXPOSE 80

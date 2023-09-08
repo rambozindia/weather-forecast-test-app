@@ -1,0 +1,25 @@
+# Build the Node.js backend
+FROM node:16 AS backend-build
+WORKDIR /app/backend
+
+# Copy the backend source code
+COPY backend/ ./
+
+# Install backend dependencies
+RUN npm install
+
+FROM node:16
+
+# Create a working directory
+WORKDIR /app
+
+# Copy the built backend from the first stage
+COPY --from=backend-build /app/backend ./backend
+
+# Expose the port your backend will run on
+EXPOSE 3000
+
+WORKDIR /app/backend
+
+# Start the Node.js backend
+CMD ["npm", "run", "serve"]
