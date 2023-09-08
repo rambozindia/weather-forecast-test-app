@@ -8,7 +8,7 @@ on:
       - main  # Change this to the branch you want to trigger the workflow
 
 jobs:
-  build-and-deploy:
+   build:
     runs-on: self-hosted
 
     steps:
