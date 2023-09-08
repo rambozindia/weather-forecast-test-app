@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <SearchCity />
-    <WeatherForecast />
+    <SearchCity v-on:place-changed="placeChanged" />
+    <WeatherForecast :selected-place="selectedPlace" />
   </div>
 </template>
 

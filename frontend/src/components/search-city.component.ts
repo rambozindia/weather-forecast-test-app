@@ -13,6 +13,7 @@ export default class SearchCity extends Vue {
       lat: place.geometry.location.lat(),
       lng: place.geometry.location.lng(),
     };
+    this.$emit("placeChanged",this.selectedPlace);
   }
 
 
