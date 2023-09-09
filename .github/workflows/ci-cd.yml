@@ -15,34 +15,34 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js for frontend
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
+      # - name: Set up Node.js for frontend
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: 16
 
-      - name: Install frontend dependencies
-        run: cd frontend && npm install
+      # - name: Install frontend dependencies
+      #   run: cd frontend && npm install
 
-      - name: Build frontend
-        run: cd frontend && npm run build
+      # - name: Build frontend
+      #   run: cd frontend && npm run build
 
-      - name: Print Path
-        run: cd frontend && pwd
+      # - name: Print Path
+      #   run: cd frontend && pwd
 
-      - name: Copy frontend build files to Nginx directory
-        run: |
-          sudo cp -r frontend/dist/* /var/www/html/
+      # - name: Copy frontend build files to Nginx directory
+      #   run: |
+      #     sudo cp -r frontend/dist/* /var/www/html/
 
-      - name: Set up Node.js for backend
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
+      # - name: Set up Node.js for backend
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: 16
 
-      - name: Install backend dependencies
-        run: cd backend && npm install
+      # - name: Install backend dependencies
+      #   run: cd backend && npm install
 
-      - name: Deploy
-        run: pm2 delete "weather-app" 2> /dev/null &&  pm2 start npm -- name weather-app -- run serve
+      # - name: Deploy
+      #   run: pm2 delete "weather-app" 2> /dev/null &&  pm2 start npm -- name weather-app -- run serve
 
       # - name: Deploy to Docker Hub
       #   env:
@@ -53,17 +53,18 @@ jobs:
       #     docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
       #     docker push weather-app
 
-      # - name: Deploy to Ubuntu server
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.SERVER_HOST }}
-      #     username: ${{ secrets.SERVER_USERNAME }}
-      #     key: ${{ secrets.SERVER_SSH_KEY }}
-      #     script: |
-      #       cd /www/wwwroot/weather
-      #       git pull origin main
-      #       npm install --prefix frontend
-      #       npm run build --prefix frontend
-      #       npm install --prefix backend
-      #       pm2 restart weather-app # Restart your Node.js backend using pm2
+      - name: Deploy to Ubuntu server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/weather-forecast-test-app
+            git pull origin main
+            cd frontend && npm install
+            npm run build
+            sudo cp -r frontend/dist/* /var/www/html/
+            cd ../backend && npm install
+            pm2 restart weather-app
 
