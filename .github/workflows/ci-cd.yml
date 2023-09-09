@@ -42,7 +42,7 @@ jobs:
         run: cd backend && npm install
 
       - name: Deploy
-        run: pm2 restart weather-app
+        run: pm2 delete "weather-app" 2> /dev/null &&  pm2 start npm -- name weather-app -- run serve
 
       # - name: Deploy to Docker Hub
       #   env:
