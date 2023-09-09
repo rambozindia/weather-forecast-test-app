@@ -23,11 +23,15 @@ jobs:
       - name: Install frontend dependencies
         run: cd frontend && npm install
 
-      - name: Print Path
-        run: pwd
-
       - name: Build frontend
         run: cd frontend && npm run build
+
+      - name: Print Path
+        run: cd frontend && pwd
+
+      - name: Copy frontend build files to Nginx directory
+        run: |
+          sudo cp -r frontend/dist/* /var/www/html/
 
       - name: Set up Node.js for backend
         uses: actions/setup-node@v2
