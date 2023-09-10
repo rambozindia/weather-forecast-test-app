@@ -64,7 +64,7 @@ jobs:
             git pull origin main
             cd frontend && npm install
             npm run build
-            sudo cp -r frontend/dist/* /var/www/html/
+            sudo cp -a dist/. /var/www/html/
             cd ../backend && npm install
             pm2 restart weather-app
 
