@@ -66,5 +66,5 @@ jobs:
             npm run build
             sudo cp -a dist/. /var/www/html/
             cd ../backend && npm install
-            pm2 delete "weather-app" 2> /dev/null &&  pm2 start npm --name weather-app -- run serve
+            pm2 restart weather-app
 
